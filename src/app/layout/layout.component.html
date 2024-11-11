@@ -1,0 +1,51 @@
+<div class="flex flex-col h-full">
+  <div class="flex shrink-0 grow basis-auto">
+    <nz-sider
+      class="bg-orange-500"
+      nzCollapsible
+      nzWidth="240px"
+      nzBreakpoint="xs"
+      [(nzCollapsed)]="isCollapsed"
+      [nzTrigger]="null"
+      nzTheme="dark"
+    >
+      <button
+        nz-button
+        nzType="primary"
+        (click)="toggleCollapsed()"
+        class="bg-orange-600 hover:bg-orange-500 border-orange-600 hover:border-orange-500 w-full"
+      >
+        <span
+          nz-icon
+          [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        ></span>
+      </button>
+      <ul
+        nz-menu
+        nzMode="inline"
+        nzTheme="dark"
+        class="bg-orange-500"
+        [nzInlineCollapsed]="isCollapsed"
+      >
+        >
+        <li
+          nz-submenu
+          nzTitle="Administración"
+          nzIcon="search"
+          class="text-white"
+        >
+          <ul>
+            <li nz-menu-item class="bg-orange-500 border-orange-500">
+              <a routerLink="sale" class="text-white"> Busqueda </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <div class="shrink-0 grow basis-auto">
+      <ng-container>
+        <router-outlet></router-outlet>
+      </ng-container>
+    </div>
+  </div>
+</div>

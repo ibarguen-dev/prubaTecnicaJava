@@ -1,0 +1,57 @@
+<div class="container mt-5">
+  <article class="d-flex justify-between gap-2 gap-lg-3">
+    <div class="m-0 mb-2">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Buscar"
+        [(ngModel)]="searchText"
+      />
+    </div>
+    <div class="m-0 mb-2">
+      <app-search-modal
+        (search)="applyFilters($event)"
+        (resert)="getAllPeople()"
+      ></app-search-modal>
+    </div>
+  </article>
+
+  <nz-table nzTemplateMode>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th (click)="sort('firstName')">Primer Nombre</th>
+        <th (click)="sort('middleName')">Segundo Nombre</th>
+        <th (click)="sort('firstSurname')">Primer Apellido</th>
+        <th (click)="sort('secondSurname')">Segundo Apellido</th>
+        <th (click)="sort('typeDocument')">Tipo de documento</th>
+        <th (click)="sort('documentNumber')">Numero de documento</th>
+        <th (click)="sort('phone')">Telefono</th>
+        <th (click)="sort('address')">Direccion</th>
+        <th (click)="sort('city')">Ciudad</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (data of ListPeoples |filter:searchText; track $index) {
+      <tr>
+        <td>{{ $index }}</td>
+        <td>{{ data.firstName }}</td>
+        <td>{{ data.middleName }}</td>
+        <td>{{ data.firstSurname }}</td>
+        <td>{{ data.secondSurname }}</td>
+        @if(data.typeDocument === "C"){
+        <td>{{ "Cedula de cuidadania" }}</td>
+        }@else if(data.typeDocument === "P"){
+        <td>{{ "Pasaporte" }}</td>
+        }@else{
+        <td>{{ "Tarjeta de identidad" }}</td>
+        }
+        <td>{{ data.documentNumber }}</td>
+        <td>{{ data.phone }}</td>
+        <td>{{ data.address }}</td>
+        <td>{{ data.city }}</td>
+      </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>

@@ -10,6 +10,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { FilterPeoplePipe } from '../../../shared/pipe/FilterPeople/filter-people.pipe';
 import { NotificationService } from '../../../shared/Services/notification.service';
+import { NgxLoadingModule } from 'ngx-loading';
 @Component({
   selector: 'app-search',
   standalone: true,
@@ -21,12 +22,14 @@ import { NotificationService } from '../../../shared/Services/notification.servi
     NgbTypeaheadModule,
     NgbPaginationModule,
     FilterPeoplePipe,
+    NgxLoadingModule,
   ],
   providers: [QuerysService, FilterPeoplePipe, NotificationService],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
 export class SearchComponent implements OnInit {
+  loading: boolean = false;
   sortField: string = '';
   ListPeoples: any[] = [];
   page = 1;
@@ -42,11 +45,16 @@ export class SearchComponent implements OnInit {
   }
 
   getAllPeople() {
+    this.loading = true;
     this.querysService.getAllPeople().subscribe({
       next: (response) => {
         this.saveList(response);
       },
+      complete: () => {
+        this.loading = false;
+      },
       error: (err) => {
+        this.loading = false;
         this.notificationService.createNotification(
           'Error',
           'Hubo un error en el servidor'
@@ -64,6 +72,7 @@ export class SearchComponent implements OnInit {
   }
 
   filterPeople(numberD: number, TypeD: string) {
+    this.loading = true;
     this.querysService.findPeopleByDocumentFilter(numberD, TypeD).subscribe({
       next: (response) => {
         if ([...response].length === 0) {
@@ -76,7 +85,11 @@ export class SearchComponent implements OnInit {
 
         this.saveList(response);
       },
+      complete: () => {
+        this.loading = false;
+      },
       error: (err) => {
+        this.loading = false;
         this.notificationService.createNotification(
           'Error',
           'Hubo un error en el servidor'

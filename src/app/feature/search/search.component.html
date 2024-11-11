@@ -1,3 +1,4 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div class="container mt-5">
   <article class="d-flex justify-between gap-2 gap-lg-3">
     <div class="m-0 mb-2">
@@ -16,7 +17,7 @@
     </div>
   </article>
 
-  <nz-table nzTemplateMode>
+  <nz-table nzTemplateMode [nzScroll]="{ x: '1100px' }">
     <thead>
       <tr>
         <th>#</th>
